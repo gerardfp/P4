@@ -1,8 +1,10 @@
 package com.company.p4;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.icu.util.Calendar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         prefs = getPreferences(MODE_PRIVATE);
+        prefs.edit().clear().apply();
+
 
         // ------- TOGGLE BUTTON
 
@@ -258,21 +262,93 @@ public class MainActivity extends AppCompatActivity {
         // ------- TIMEPICKER
 
         timePicker1 = findViewById(R.id.timePicker1);
+        timePicker1.setHour(getPreferences(MODE_PRIVATE).getInt("TIMEPICKER1_HOUR", 0));
+        timePicker1.setMinute(getPreferences(MODE_PRIVATE).getInt("TIMEPICKER1_MINUTE", 0));
+        timePicker1.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+                prefs.edit().putInt("TIMEPICKER1_HOUR", i).putInt("TIMEPICKER1_MINUTE", i1).apply();
+            }
+        });
 
         timePicker2 = findViewById(R.id.timePicker2);
+        timePicker2.setHour(getPreferences(MODE_PRIVATE).getInt("TIMEPICKER2_HOUR", 0));
+        timePicker2.setMinute(getPreferences(MODE_PRIVATE).getInt("TIMEPICKER2_MINUTE", 0));
+        timePicker2.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+                prefs.edit().putInt("TIMEPICKER2_HOUR", i).putInt("TIMEPICKER2_MINUTE", i1).apply();
+            }
+        });
+
 
         // ------- TEXTCLOCK
 
         textClock = findViewById(R.id.textClock);
 
+
         // ------- DATEPICKER
+
         datePicker1 = findViewById(R.id.datePicker1);
+        datePicker1.updateDate(
+                prefs.getInt("DATEPICKER1_YEAR", datePicker1.getYear()),
+                prefs.getInt("DATEPICKER1_MONTH", datePicker1.getMonth()),
+                prefs.getInt("DATEPICKER1_DAYOFMONTH", datePicker1.getDayOfMonth()));
+        datePicker1.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+                prefs.edit()
+                        .putInt("DATEPICKER1_YEAR", i)
+                        .putInt("DATEPICKER1_MONTH", i1)
+                        .putInt("DATEPICKER1_DAYOFMONTH", i2)
+                        .apply();
+
+            }
+        });
+
         datePicker2 = findViewById(R.id.datePicker2);
+        datePicker2.updateDate(
+                prefs.getInt("DATEPICKER2_YEAR", datePicker2.getYear()),
+                prefs.getInt("DATEPICKER2_MONTH", datePicker2.getMonth()),
+                prefs.getInt("DATEPICKER2_DAYOFMONTH", datePicker2.getDayOfMonth()));
+        datePicker2.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+                prefs.edit()
+                        .putInt("DATEPICKER2_YEAR", i)
+                        .putInt("DATEPICKER2_MONTH", i1)
+                        .putInt("DATEPICKER2_DAYOFMONTH", i2)
+                        .apply();
+
+            }
+        });
+
 
         // ------- CALENDARVIEW
+
         calendarView = findViewById(R.id.calendarView);
+        calendarView.setDate(prefs.getLong("CALENDARVIEW", Calendar.getInstance().getTimeInMillis()));
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                Calendar.getInstance().set(i,i1,i2);
+
+                prefs.edit().putLong("CALENDARVIEW", Calendar.getInstance().getTimeInMillis()).apply();
+            }
+        });
+
 
         // ------- NUMBERPICKER
+
         numberPicker = findViewById(R.id.numberPicker);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(10);
+        numberPicker.setValue(prefs.getInt("NUMBERPICKER", numberPicker.getMinValue()));
+        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                prefs.edit().putInt("NUMBERPICKER", i1).apply();
+            }
+        });
     }
 }

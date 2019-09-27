@@ -23,12 +23,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
+
                     <TextView
-                        android:text="ToogleButton"
-                        android:gravity="center"
-                        android:textSize="24sp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="ToggleButton"
+                        android:textSize="24sp" />
                     <ToggleButton
                         android:id="@+id/toogleButton"
                         android:layout_width="wrap_content"
@@ -263,12 +264,13 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
+
                     <TextView
-                        android:text="TimePeeker"
-                        android:gravity="center"
-                        android:textSize="24sp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="TimePicker"
+                        android:textSize="24sp" />
                     <TimePicker
                         android:id="@+id/timePicker1"
                         android:layout_width="wrap_content"
