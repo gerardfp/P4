@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     SeekBar seekBar1, seekBar2;
     RatingBar ratingBar;
     TimePicker timePicker1, timePicker2;
-    TextClock textClock;
     DatePicker datePicker1, datePicker2;
     CalendarView calendarView;
     NumberPicker numberPicker;
@@ -280,11 +279,6 @@ public class MainActivity extends AppCompatActivity {
                 prefs.edit().putInt("TIMEPICKER2_HOUR", i).putInt("TIMEPICKER2_MINUTE", i1).apply();
             }
         });
-
-
-        // ------- TEXTCLOCK
-
-        textClock = findViewById(R.id.textClock);
 
 
         // ------- DATEPICKER
