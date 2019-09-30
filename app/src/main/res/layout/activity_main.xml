@@ -103,9 +103,8 @@
                     <CheckedTextView
                         android:id="@+id/checkedTextView"
                         android:text="Márcame"
-                        android:layout_width="fill_parent"
-                        android:layout_height="40dip"
-                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:drawableRight="?android:attr/listChoiceIndicatorMultiple"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -171,8 +170,6 @@
                         android:id="@+id/spinner2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:prompt="@string/spinner_prompt"
-                        android:entries="@array/planets_array"
                         android:spinnerMode="dialog"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -195,19 +192,18 @@
                         android:layout_height="wrap_content"/>
                     <ProgressBar
                         android:id="@+id/progressBar1"
-                        style="?android:attr/progressBarStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <ProgressBar
+                        android:id="@+id/progressBar2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/progressBar2"
                         style="?android:attr/progressBarStyleHorizontal" />
                     <Button
+                        android:id="@+id/startProgress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Start"
-                        android:id="@+id/startProgress"/>
+                        android:text="Start" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -230,13 +226,14 @@
                     <SeekBar
                         android:id="@+id/seekBar1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:max="100"/>
                     <SeekBar
                         android:id="@+id/seekBar2"
                         style="@style/Widget.AppCompat.SeekBar.Discrete"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="10" />
+                        android:max="100" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

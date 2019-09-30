@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">P4</string>
-    <string name="spinner_prompt">Choose you planet</string>
+    <string name="spinner_prompt">Choose your planet</string>
     <string-array name="planets_array">
         <item>Mercury</item>
         <item>Venus</item>
@@ -11,5 +11,4 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
-
 </resources>

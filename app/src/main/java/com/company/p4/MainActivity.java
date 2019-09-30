@@ -1,14 +1,12 @@
 package com.company.p4;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
@@ -22,10 +20,12 @@ import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.TextClock;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         // ------- SPINNER
 
         spinner1 = findViewById(R.id.spinner1);
-        spinner1.setSelection(prefs.getInt("SPINNER1", 0));
+        spinner1.setSelection(prefs.getInt("SPINNER1", -1));
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -134,6 +134,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         spinner2 = findViewById(R.id.spinner2);
+        String[] items = new String[]{"Milky Way", "Andromeda", "Cassiopeia", "Sagittarius", "Pegasus"};
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
+        spinner2.setAdapter(arrayAdapter);
+        spinner2.setPrompt("Choose your galaxy");
         spinner2.setSelection(prefs.getInt("SPINNER2", 0));
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -179,15 +183,6 @@ public class MainActivity extends AppCompatActivity {
                         return "Task Completed.";
                     }
                     @Override
-                    protected void onPostExecute(String result) {
-                        Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
-                        startProgress.setText("Restart");
-                        startProgress.setEnabled(true);
-                        progressBar1.setVisibility(View.GONE);
-                        progressBar2.setVisibility(View.GONE);
-
-                    }
-                    @Override
                     protected void onPreExecute() {
                         startProgress.setText("Task Starting...");
                         startProgress.setEnabled(false);
@@ -199,7 +194,14 @@ public class MainActivity extends AppCompatActivity {
                     protected void onProgressUpdate(Integer... values) {
                         progressBar2.setProgress((int) (values[0]*progressBar2.getMax()/100.0f));
                     }
-
+                    @Override
+                    protected void onPostExecute(String result) {
+                        Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
+                        startProgress.setText("Restart");
+                        startProgress.setEnabled(true);
+                        progressBar1.setVisibility(View.GONE);
+                        progressBar2.setVisibility(View.GONE);
+                    }
                 }.execute(1000, 10);
             }
         });
@@ -266,7 +268,10 @@ public class MainActivity extends AppCompatActivity {
         timePicker1.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                prefs.edit().putInt("TIMEPICKER1_HOUR", i).putInt("TIMEPICKER1_MINUTE", i1).apply();
+                prefs.edit()
+                        .putInt("TIMEPICKER1_HOUR", i)
+                        .putInt("TIMEPICKER1_MINUTE", i1)
+                        .apply();
             }
         });
 
@@ -276,7 +281,10 @@ public class MainActivity extends AppCompatActivity {
         timePicker2.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                prefs.edit().putInt("TIMEPICKER2_HOUR", i).putInt("TIMEPICKER2_MINUTE", i1).apply();
+                prefs.edit()
+                        .putInt("TIMEPICKER2_HOUR", i)
+                        .putInt("TIMEPICKER2_MINUTE", i1)
+                        .apply();
             }
         });
 
@@ -296,7 +304,6 @@ public class MainActivity extends AppCompatActivity {
                         .putInt("DATEPICKER1_MONTH", i1)
                         .putInt("DATEPICKER1_DAYOFMONTH", i2)
                         .apply();
-
             }
         });
 
@@ -313,7 +320,6 @@ public class MainActivity extends AppCompatActivity {
                         .putInt("DATEPICKER2_MONTH", i1)
                         .putInt("DATEPICKER2_DAYOFMONTH", i2)
                         .apply();
-
             }
         });
 
@@ -326,7 +332,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
                 Calendar.getInstance().set(i,i1,i2);
-
                 prefs.edit().putLong("CALENDARVIEW", Calendar.getInstance().getTimeInMillis()).apply();
             }
         });
